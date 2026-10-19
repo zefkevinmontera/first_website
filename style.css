@@ -1,0 +1,219 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700453824.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    background: rgba(60, 152, 206, 0.575);
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: rgb(246, 247, 248);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 4rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-right: 550px;
+}
+
+.nav-menu a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    transition: color 0.3s;
+    padding: 0.5rem 1rem;
+}
+
+.nav-menu a:hover {
+    background: #f8f8f8;
+    color: rgba(60, 152, 206, 0.575);
+    border-radius: 5px;
+}
+
+.middle-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 70vh;
+    padding: 2rem;
+    margin-top: 80px;
+}
+
+.middle-section h1 {
+    font-size: 5rem;
+    color: rgb(255, 255, 255);
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.middle-section p {
+    font-size: 2rem;
+    color: rgb(236, 236, 236);
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.wonders-section {
+    padding: 2rem;
+    background: rgba(60, 152, 206, 0.575);
+    font-weight: bold;
+}
+
+.wonders-section h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #fffffffa;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.card-content {
+    padding: 1.5rem;
+    text-align: center;
+    background: rgba(214, 200, 200, 0.3);
+    border-radius: 10px;
+    min-width: 280px;
+    max-width: 350px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(100px);
+}
+
+.image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.card-content h2 {
+    color: #fffffdfa;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.card-content p {
+    color: rgb(255, 255, 253);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    text-align: center;
+    font-weight: bold;
+    line-height: 1.4;
+}
+
+.btn {
+    display: inline-block;
+    background: rgb(219, 219, 219);
+    color: rgb(0, 0, 0);
+    padding: 10px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+    margin-top: auto;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background: rgba(60, 152, 206, 0.575);
+    color: white;
+}
+
+.forms-section {
+    padding: 4rem 2rem;
+    background: rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+.forms-section h1 {
+    font-size: 2.5rem;
+    color: #f3f3f3fa;
+    margin-bottom: 3rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.forms-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.form-card {
+    background: rgba(214, 200, 200, 0.3);
+    padding: 2rem;
+    border-radius: 10px;
+    min-width: 350px;
+    max-width: 400px;
+    backdrop-filter: blur(10px);
+}
+
+.form-card h2 {
+    color: #fffffffa;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    color: #333;
+}
+
+.contact-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.contact-form button {
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: 2px solid #fcfcfc;
+    background: white;
+}
