@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     /* =========================================
-       1. Dossier Data for Each Wonder
+       1. Dossier Data for All 6 Wonders
        ========================================= */
     const wondersData = {
         china: {
@@ -44,11 +44,97 @@ document.addEventListener('DOMContentLoaded', () => {
                 { label: 'BEST SEASON', value: 'May–September (Dry)' },
                 { label: 'RECOMMENDED STAY', value: '4–5 Days (w/ Sacred Valley)' }
             ]
+        },
+        italy: {
+            index: '04 / DOSSIER',
+            location: 'ROME, ITALY — 41.8902° N, 12.4922° E',
+            title: 'The Colosseum',
+            selectValue: 'The Colosseum, Italy',
+            image: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1000&q=80',
+            description: 'Commissioned under Emperor Vespasian in 72 AD, the Flavian Amphitheatre remains the largest ancient amphitheatre ever built. Its radial system of 80 numbered entrance arches and multi-level underground hypogeum set the blueprint for modern stadium engineering.',
+            specs: [
+                { label: 'INAUGURATED', value: '80 AD' },
+                { label: 'CAPACITY', value: '50,000 – 80,000 Spectators' },
+                { label: 'BEST SEASON', value: 'April–May & Sept–Oct' },
+                { label: 'RECOMMENDED STAY', value: '3–4 Days' }
+            ]
+        },
+        india: {
+            index: '05 / DOSSIER',
+            location: 'AGRA, UTTAR PRADESH, INDIA — 27.1751° N, 78.0421° E',
+            title: 'Taj Mahal',
+            selectValue: 'Taj Mahal, India',
+            image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1000&q=80',
+            description: 'Built between 1632 and 1648 by Mughal emperor Shah Jahan, the Taj Mahal balances geometric precision with optical subtlety—its four minarets lean slightly outward to protect the central tomb, and its Makrana marble shifts subtly in hue from dawn to dusk.',
+            specs: [
+                { label: 'COMPLETED', value: '1648 AD' },
+                { label: 'PRIMARY MATERIAL', value: 'Makrana White Marble' },
+                { label: 'BEST SEASON', value: 'October–March' },
+                { label: 'RECOMMENDED STAY', value: '2 Days' }
+            ]
+        },
+        mexico: {
+            index: '06 / DOSSIER',
+            location: 'YUCATÁN, MEXICO — 20.6843° N, 88.5678° W',
+            title: 'Chichén Itzá',
+            selectValue: 'Chichén Itzá, Mexico',
+            image: 'https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&w=1000&q=80',
+            description: 'A pre-Columbian city built by the Maya people of the Terminal Classic period. At its center rises the Temple of Kukulcán (El Castillo), whose 365 steps correspond to the solar year and cast a serpent-shaped shadow down the balustrade during the spring and autumn equinoxes.',
+            specs: [
+                { label: 'PEAK ERA', value: '600 – 1200 AD' },
+                { label: 'ALIGNMENT', value: 'Solar Equinoxes' },
+                { label: 'BEST SEASON', value: 'November–April' },
+                { label: 'RECOMMENDED STAY', value: '2–3 Days' }
+            ]
         }
     };
 
     /* =========================================
-       2. Scroll Reveal (IntersectionObserver)
+       2. Interactive Region Filter
+       ========================================= */
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const wonderCards = document.querySelectorAll('.wonder-card');
+    const filterStatus = document.getElementById('filterStatus');
+    const totalCards = wonderCards.length;
+
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const selectedRegion = btn.dataset.filter;
+
+            // Update active button state
+            filterButtons.forEach(b => {
+                b.classList.remove('is-active');
+                b.setAttribute('aria-selected', 'false');
+            });
+            btn.classList.add('is-active');
+            btn.setAttribute('aria-selected', 'true');
+
+            // Filter cards with staggered entrance animation
+            let visibleCount = 0;
+            wonderCards.forEach(card => {
+                const matches = selectedRegion === 'all' || card.dataset.region === selectedRegion;
+
+                card.classList.remove('is-filtering-in');
+                if (matches) {
+                    card.classList.remove('is-hidden');
+                    // Force reflow so animation replays cleanly
+                    void card.offsetWidth;
+                    card.style.animationDelay = `${visibleCount * 0.06}s`;
+                    card.classList.add('is-filtering-in');
+                    visibleCount++;
+                } else {
+                    card.classList.add('is-hidden');
+                }
+            });
+
+            const formattedVisible = String(visibleCount).padStart(2, '0');
+            const formattedTotal = String(totalCards).padStart(2, '0');
+            filterStatus.textContent = `SHOWING ${formattedVisible} OF ${formattedTotal} MONUMENTS`;
+        });
+    });
+
+    /* =========================================
+       3. Scroll Reveal (IntersectionObserver)
        ========================================= */
     const revealElements = document.querySelectorAll('[data-reveal]');
     const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -66,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
     revealElements.forEach(el => revealObserver.observe(el));
 
     /* =========================================
-       3. Live Scroll Progress Bar
+       4. Live Scroll Progress Bar
        ========================================= */
     const scrollProgress = document.getElementById('scrollProgress');
     const updateProgress = () => {
@@ -79,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateProgress();
 
     /* =========================================
-       4. Mobile Menu Drawer
+       5. Mobile Menu Drawer
        ========================================= */
     const menuBtn = document.getElementById('menuBtn');
     const mobileDrawer = document.getElementById('mobileDrawer');
@@ -101,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* =========================================
-       5. Interactive Dossier Drawer
+       6. Interactive Dossier Drawer
        ========================================= */
     const dossierDrawer = document.getElementById('dossierDrawer');
     const dossierBackdrop = document.getElementById('dossierBackdrop');
@@ -153,7 +239,6 @@ document.addEventListener('DOMContentLoaded', () => {
     dossierClose.addEventListener('click', closeDossier);
     dossierBackdrop.addEventListener('click', closeDossier);
 
-    // Pre-fill contact form and scroll smoothly when clicking "Plan a Trip to This Site"
     dossierInquireBtn.addEventListener('click', () => {
         if (activeDestination) {
             destinationSelect.value = activeDestination;
@@ -163,7 +248,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => document.getElementById('name').focus(), 500);
     });
 
-    // Close drawers on Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             if (dossierDrawer.classList.contains('is-open')) closeDossier();
@@ -172,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* =========================================
-       6. Contact Form Handling & Back to Top
+       7. Contact Form Handling & Back to Top
        ========================================= */
     const contactForm = document.getElementById('contactForm');
     const formStatus = document.getElementById('formStatus');

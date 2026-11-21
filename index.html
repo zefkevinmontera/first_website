@@ -80,7 +80,7 @@
                     </div>
                     <div class="media-caption reveal-up" style="--delay: 0.5s">
                         <span class="mono-label">FIG. 00 — GLOBAL EXPEDITIONS</span>
-                        <span class="mono-label">3 FEATURED SITES</span>
+                        <span class="mono-label">6 FEATURED SITES / 4 REGIONS</span>
                     </div>
                 </div>
             </div>
@@ -95,11 +95,24 @@
                 <span class="ticker-sep">/</span>
                 <span>13.1631° S, 72.5450° W — MACHU PICCHU, PERU</span>
                 <span class="ticker-sep">/</span>
+                <span>41.8902° N, 12.4922° E — COLOSSEUM, ITALY</span>
+                <span class="ticker-sep">/</span>
+                <span>27.1751° N, 78.0421° E — TAJ MAHAL, INDIA</span>
+                <span class="ticker-sep">/</span>
+                <span>20.6843° N, 88.5678° W — CHICHÉN ITZÁ, MEXICO</span>
+                <span class="ticker-sep">/</span>
+                <!-- Duplicate for seamless loop -->
                 <span>40.4319° N, 116.5704° E — GREAT WALL OF CHINA</span>
                 <span class="ticker-sep">/</span>
                 <span>30.3285° N, 35.4444° E — PETRA, JORDAN</span>
                 <span class="ticker-sep">/</span>
                 <span>13.1631° S, 72.5450° W — MACHU PICCHU, PERU</span>
+                <span class="ticker-sep">/</span>
+                <span>41.8902° N, 12.4922° E — COLOSSEUM, ITALY</span>
+                <span class="ticker-sep">/</span>
+                <span>27.1751° N, 78.0421° E — TAJ MAHAL, INDIA</span>
+                <span class="ticker-sep">/</span>
+                <span>20.6843° N, 88.5678° W — CHICHÉN ITZÁ, MEXICO</span>
                 <span class="ticker-sep">/</span>
             </div>
         </div>
@@ -113,15 +126,37 @@
                         <h2>Wonders of the World</h2>
                     </div>
                     <p class="section-intro">
-                        Three monumental landscapes shaped by human ingenuity. Select any site to inspect its architectural dossier.
+                        Filter by region to explore six monumental landscapes shaped by human ingenuity. Select any site to inspect its architectural dossier.
                     </p>
                 </div>
 
-                <div class="wonders-grid">
+                <!-- Interactive Region Filter Bar -->
+                <div class="filter-bar" role="tablist" aria-label="Filter wonders by region" data-reveal>
+                    <div class="filter-buttons">
+                        <button class="filter-btn is-active" data-filter="all" role="tab" aria-selected="true">
+                            All Sites <span class="filter-count">06</span>
+                        </button>
+                        <button class="filter-btn" data-filter="asia" role="tab" aria-selected="false">
+                            Asia <span class="filter-count">02</span>
+                        </button>
+                        <button class="filter-btn" data-filter="middle-east" role="tab" aria-selected="false">
+                            Middle East <span class="filter-count">01</span>
+                        </button>
+                        <button class="filter-btn" data-filter="americas" role="tab" aria-selected="false">
+                            Americas <span class="filter-count">02</span>
+                        </button>
+                        <button class="filter-btn" data-filter="europe" role="tab" aria-selected="false">
+                            Europe <span class="filter-count">01</span>
+                        </button>
+                    </div>
+                    <span class="mono-label filter-status" id="filterStatus">SHOWING 06 OF 06 MONUMENTS</span>
+                </div>
+
+                <div class="wonders-grid" id="wondersGrid">
                     <!-- 01 China -->
-                    <article class="wonder-card" data-reveal style="--delay: 0.05s">
+                    <article class="wonder-card" data-region="asia" data-reveal style="--delay: 0.05s">
                         <div class="card-meta">
-                            <span class="mono-label">01 / CHINA</span>
+                            <span class="mono-label">01 / CHINA — ASIA</span>
                             <span class="mono-label">40.43° N</span>
                         </div>
                         <div class="card-image-box">
@@ -138,9 +173,9 @@
                     </article>
 
                     <!-- 02 Jordan -->
-                    <article class="wonder-card" data-reveal style="--delay: 0.15s">
+                    <article class="wonder-card" data-region="middle-east" data-reveal style="--delay: 0.12s">
                         <div class="card-meta">
-                            <span class="mono-label">02 / JORDAN</span>
+                            <span class="mono-label">02 / JORDAN — MIDDLE EAST</span>
                             <span class="mono-label">30.32° N</span>
                         </div>
                         <div class="card-image-box">
@@ -157,9 +192,9 @@
                     </article>
 
                     <!-- 03 Peru -->
-                    <article class="wonder-card" data-reveal style="--delay: 0.25s">
+                    <article class="wonder-card" data-region="americas" data-reveal style="--delay: 0.19s">
                         <div class="card-meta">
-                            <span class="mono-label">03 / PERU</span>
+                            <span class="mono-label">03 / PERU — AMERICAS</span>
                             <span class="mono-label">13.16° S</span>
                         </div>
                         <div class="card-image-box">
@@ -174,11 +209,68 @@
                             </button>
                         </div>
                     </article>
+
+                    <!-- 04 Italy -->
+                    <article class="wonder-card" data-region="europe" data-reveal style="--delay: 0.05s">
+                        <div class="card-meta">
+                            <span class="mono-label">04 / ITALY — EUROPE</span>
+                            <span class="mono-label">41.89° N</span>
+                        </div>
+                        <div class="card-image-box">
+                            <img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1000&q=80" alt="The Colosseum in Rome, Italy">
+                        </div>
+                        <div class="card-content">
+                            <h3>The Colosseum</h3>
+                            <p>Rome's monumental Flavian Amphitheatre, engineered in travertine limestone and volcanic tuff with tiered barrel vaults and a subterranean hypogeum.</p>
+                            <button class="card-trigger" data-wonder="italy">
+                                <span>Read Dossier</span>
+                                <span class="trigger-arrow">↗</span>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- 05 India -->
+                    <article class="wonder-card" data-region="asia" data-reveal style="--delay: 0.12s">
+                        <div class="card-meta">
+                            <span class="mono-label">05 / INDIA — ASIA</span>
+                            <span class="mono-label">27.17° N</span>
+                        </div>
+                        <div class="card-image-box">
+                            <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1000&q=80" alt="Taj Mahal in Agra, India">
+                        </div>
+                        <div class="card-content">
+                            <h3>Taj Mahal</h3>
+                            <p>A symmetrical ivory-white marble mausoleum on the Yamuna River bank, uniting Persian, Islamic, and Indian architectural traditions with pietra dura inlay.</p>
+                            <button class="card-trigger" data-wonder="india">
+                                <span>Read Dossier</span>
+                                <span class="trigger-arrow">↗</span>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- 06 Mexico -->
+                    <article class="wonder-card" data-region="americas" data-reveal style="--delay: 0.19s">
+                        <div class="card-meta">
+                            <span class="mono-label">06 / MEXICO — AMERICAS</span>
+                            <span class="mono-label">20.68° N</span>
+                        </div>
+                        <div class="card-image-box">
+                            <img src="https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&w=1000&q=80" alt="Chichén Itzá in Yucatán, Mexico">
+                        </div>
+                        <div class="card-content">
+                            <h3>Chichén Itzá</h3>
+                            <p>A major Maya ceremonial city in the Yucatán Peninsula anchored by El Castillo, a stepped pyramid calibrated to the solar equinoxes.</p>
+                            <button class="card-trigger" data-wonder="mexico">
+                                <span>Read Dossier</span>
+                                <span class="trigger-arrow">↗</span>
+                            </button>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <!-- Philosophy / About Section (Solid Dark Contrast Band) -->
+        <!-- Philosophy / About Section -->
         <section id="about" class="philosophy-section">
             <div class="container philosophy-grid">
                 <div class="philosophy-left" data-reveal>
@@ -251,6 +343,9 @@
                                 <option value="Great Wall of China, China">Great Wall of China, China</option>
                                 <option value="Petra, Jordan">Petra, Jordan</option>
                                 <option value="Machu Picchu, Peru">Machu Picchu, Peru</option>
+                                <option value="The Colosseum, Italy">The Colosseum, Italy</option>
+                                <option value="Taj Mahal, India">Taj Mahal, India</option>
+                                <option value="Chichén Itzá, Mexico">Chichén Itzá, Mexico</option>
                                 <option value="Multi-Site Expedition">Multi-Site Expedition</option>
                             </select>
                         </div>
@@ -310,9 +405,7 @@
             <h2 id="dossierTitle"></h2>
             <p class="dossier-desc" id="dossierDesc"></p>
 
-            <div class="dossier-specs" id="dossierSpecs">
-                <!-- Populated by JS -->
-            </div>
+            <div class="dossier-specs" id="dossierSpecs"></div>
 
             <button class="btn btn-solid btn-full" id="dossierInquireBtn">
                 <span>Plan a Trip to This Site</span>

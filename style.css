@@ -1,3 +1,6 @@
+/* =========================================
+   Design Tokens (100% Solid Colors — No Gradients)
+   ========================================= */
 :root {
     --bg: #F4F1EA;
     --surface: #EAE5DA;
@@ -85,7 +88,6 @@ h1, h2, h3 {
     background-color: var(--bg);
     border-bottom: 1px solid var(--border);
     z-index: 100;
-    transition: background-color 0.3s ease;
 }
 
 .nav-inner {
@@ -154,7 +156,6 @@ h1, h2, h3 {
     transform-origin: left;
 }
 
-/* Reading Progress Bar */
 .scroll-progress {
     position: absolute;
     bottom: -1px;
@@ -392,7 +393,7 @@ h1, h2, h3 {
     font-size: 0.75rem;
     letter-spacing: 0.08em;
     color: var(--ink);
-    animation: tickerScroll 28s linear infinite;
+    animation: tickerScroll 36s linear infinite;
 }
 
 .ticker:hover .ticker-track {
@@ -409,7 +410,7 @@ h1, h2, h3 {
 }
 
 /* =========================================
-   Wonders Section
+   Wonders Section & Region Filter Bar
    ========================================= */
 .wonders-section {
     padding: 6.5rem 0;
@@ -422,7 +423,7 @@ h1, h2, h3 {
     gap: 2rem;
     padding-bottom: 2.5rem;
     border-bottom: 1px solid var(--border);
-    margin-bottom: 3.5rem;
+    margin-bottom: 2rem;
 }
 
 .section-head h2 {
@@ -431,15 +432,70 @@ h1, h2, h3 {
 }
 
 .section-intro {
-    max-width: 380px;
+    max-width: 390px;
     color: var(--ink-muted);
     font-size: 0.98rem;
 }
 
+/* Region Filter Bar */
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    padding-bottom: 2.5rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.filter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.15rem;
+    background-color: transparent;
+    border: 1px solid var(--border);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.filter-btn:hover {
+    border-color: var(--ink);
+}
+
+.filter-btn.is-active {
+    background-color: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+}
+
+.filter-count {
+    font-size: 0.68rem;
+    opacity: 0.65;
+}
+
+.filter-btn.is-active .filter-count {
+    color: #E2856B;
+    opacity: 1;
+}
+
+/* Wonders Grid & Filter Transitions */
 .wonders-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2.5rem;
+    gap: 3rem 2.5rem;
 }
 
 .wonder-card {
@@ -447,6 +503,26 @@ h1, h2, h3 {
     flex-direction: column;
     border-bottom: 1px solid var(--border);
     padding-bottom: 2rem;
+    transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out);
+}
+
+.wonder-card.is-hidden {
+    display: none;
+}
+
+.wonder-card.is-filtering-in {
+    animation: cardFilterIn 0.55s var(--ease-out) forwards;
+}
+
+@keyframes cardFilterIn {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .card-meta {
