@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    /* =========================================
-       1. Dossier Data for All 6 Wonders
-       ========================================= */
+    /* =========================================================
+       1. Architectural Dossier Data
+       ========================================================= */
     const wondersData = {
         china: {
             index: '01 / DOSSIER',
@@ -89,9 +89,129 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    /* =========================================
-       2. Interactive Region Filter
-       ========================================= */
+    /* =========================================================
+       2. Custom Animation #1: Cartographic Magnifying Loupe
+       ========================================================= */
+    const loupeFrame = document.getElementById('loupeFrame');
+    const loupeLens = document.getElementById('loupeLens');
+    const loupeBaseImg = document.getElementById('loupeBaseImg');
+    const loupeCoords = document.getElementById('loupeCoords');
+
+    if (loupeFrame && loupeLens && loupeBaseImg) {
+        const zoomLevel = 2.1;
+
+        loupeFrame.addEventListener('mouseenter', () => {
+            loupeLens.style.backgroundImage = `url('${loupeBaseImg.src}')`;
+            loupeFrame.classList.add('is-inspecting');
+        });
+
+        loupeFrame.addEventListener('mouseleave', () => {
+            loupeFrame.classList.remove('is-inspecting');
+        });
+
+        loupeFrame.addEventListener('mousemove', (e) => {
+            const rect = loupeFrame.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            loupeLens.style.left = `${x}px`;
+            loupeLens.style.top = `${y}px`;
+
+            const bgWidth = rect.width * zoomLevel;
+            const bgHeight = rect.height * zoomLevel;
+            const bgX = -(x * zoomLevel - loupeLens.offsetWidth / 2);
+            const bgY = -(y * zoomLevel - loupeLens.offsetHeight / 2);
+
+            loupeLens.style.backgroundSize = `${bgWidth}px ${bgHeight}px`;
+            loupeLens.style.backgroundPosition = `${bgX}px ${bgY}px`;
+
+            const lat = (65 - (y / rect.height) * 120).toFixed(2);
+            const lon = (-140 + (x / rect.width) * 280).toFixed(2);
+            const latDir = lat >= 0 ? 'N' : 'S';
+            const lonDir = lon >= 0 ? 'E' : 'W';
+            loupeCoords.textContent = `${Math.abs(lat)}° ${latDir} / ${Math.abs(lon)}° ${lonDir}`;
+        });
+    }
+
+    /* =========================================================
+       3. Custom Animation #2: Magnetic Reticle + 3D Card Tilt
+       ========================================================= */
+    const cards = document.querySelectorAll('.wonder-card');
+    cards.forEach(card => {
+        const imgBox = card.querySelector('.card-image-box');
+        const reticle = card.querySelector('.reticle');
+
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const normX = (e.clientX - rect.left) / rect.width - 0.5;
+            const normY = (e.clientY - rect.top) / rect.height - 0.5;
+            card.style.transform = `rotateY(${normX * 4}deg) rotateX(${-normY * 4}deg)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        });
+
+        if (imgBox && reticle) {
+            imgBox.addEventListener('mousemove', (e) => {
+                const rect = imgBox.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                reticle.style.left = `${x}px`;
+                reticle.style.top = `${y}px`;
+            });
+        }
+    });
+
+    /* =========================================================
+       4. Custom Animation #3: Typewriter Coordinate Scramble on Nav
+       ========================================================= */
+    const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789°/';
+    document.querySelectorAll('.nav-link').forEach(link => {
+        const originalText = link.dataset.scramble || link.textContent;
+        let interval = null;
+
+        link.addEventListener('mouseenter', () => {
+            let iteration = 0;
+            clearInterval(interval);
+            interval = setInterval(() => {
+                link.textContent = originalText
+                    .split('')
+                    .map((char, index) => {
+                        if (index < iteration) return originalText[index];
+                        return glyphs[Math.floor(Math.random() * glyphs.length)];
+                    })
+                    .join('');
+
+                if (iteration >= originalText.length) {
+                    clearInterval(interval);
+                }
+                iteration += 1 / 2;
+            }, 25);
+        });
+    });
+
+    /* =========================================================
+       5. Architectural Drafting Reveals (IntersectionObserver)
+       ========================================================= */
+    const draftElements = document.querySelectorAll('[data-draft]');
+    const draftObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-drafted');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+    });
+
+    draftElements.forEach(el => draftObserver.observe(el));
+
+    /* =========================================================
+       6. Interactive Region Filter
+       ========================================================= */
     const filterButtons = document.querySelectorAll('.filter-btn');
     const wonderCards = document.querySelectorAll('.wonder-card');
     const filterStatus = document.getElementById('filterStatus');
@@ -101,7 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             const selectedRegion = btn.dataset.filter;
 
-            // Update active button state
             filterButtons.forEach(b => {
                 b.classList.remove('is-active');
                 b.setAttribute('aria-selected', 'false');
@@ -109,15 +228,13 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.add('is-active');
             btn.setAttribute('aria-selected', 'true');
 
-            // Filter cards with staggered entrance animation
             let visibleCount = 0;
             wonderCards.forEach(card => {
                 const matches = selectedRegion === 'all' || card.dataset.region === selectedRegion;
-
                 card.classList.remove('is-filtering-in');
+
                 if (matches) {
                     card.classList.remove('is-hidden');
-                    // Force reflow so animation replays cleanly
                     void card.offsetWidth;
                     card.style.animationDelay = `${visibleCount * 0.06}s`;
                     card.classList.add('is-filtering-in');
@@ -133,27 +250,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* =========================================
-       3. Scroll Reveal (IntersectionObserver)
-       ========================================= */
-    const revealElements = document.querySelectorAll('[data-reveal]');
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, {
-        threshold: 0.12,
-        rootMargin: '0px 0px -40px 0px'
-    });
-
-    revealElements.forEach(el => revealObserver.observe(el));
-
-    /* =========================================
-       4. Live Scroll Progress Bar
-       ========================================= */
+    /* =========================================================
+       7. Scroll Progress, Mobile Drawer, Dossier & Form
+       ========================================================= */
     const scrollProgress = document.getElementById('scrollProgress');
     const updateProgress = () => {
         const scrollTop = window.scrollY;
@@ -164,37 +263,28 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', updateProgress, { passive: true });
     updateProgress();
 
-    /* =========================================
-       5. Mobile Menu Drawer
-       ========================================= */
     const menuBtn = document.getElementById('menuBtn');
     const mobileDrawer = document.getElementById('mobileDrawer');
-    const mobileLinks = document.querySelectorAll('.mobile-link');
-
     const toggleMobileMenu = (forceClose = false) => {
         const isOpen = forceClose ? false : !mobileDrawer.classList.contains('is-open');
         mobileDrawer.classList.toggle('is-open', isOpen);
         menuBtn.classList.toggle('is-open', isOpen);
         menuBtn.setAttribute('aria-expanded', isOpen);
         mobileDrawer.setAttribute('aria-hidden', !isOpen);
-        menuBtn.querySelector('.menu-btn-text').textContent = isOpen ? 'CLOSE' : 'MENU';
+        menuBtn.querySelector('.menu-btn-text').textContent = isOpen ? 'CLOSE' : 'INDEX';
         document.body.classList.toggle('no-scroll', isOpen);
     };
 
     menuBtn.addEventListener('click', () => toggleMobileMenu());
-    mobileLinks.forEach(link => {
+    document.querySelectorAll('.mobile-link').forEach(link => {
         link.addEventListener('click', () => toggleMobileMenu(true));
     });
 
-    /* =========================================
-       6. Interactive Dossier Drawer
-       ========================================= */
     const dossierDrawer = document.getElementById('dossierDrawer');
     const dossierBackdrop = document.getElementById('dossierBackdrop');
     const dossierClose = document.getElementById('dossierClose');
     const dossierInquireBtn = document.getElementById('dossierInquireBtn');
     const destinationSelect = document.getElementById('destination');
-
     let activeDestination = '';
 
     const openDossier = (key) => {
@@ -211,8 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
         imgEl.src = data.image;
         imgEl.alt = data.title;
 
-        const specsContainer = document.getElementById('dossierSpecs');
-        specsContainer.innerHTML = data.specs.map(spec => `
+        document.getElementById('dossierSpecs').innerHTML = data.specs.map(spec => `
             <div class="spec-item">
                 <span class="mono-label">${spec.label}</span>
                 <span class="spec-value">${spec.value}</span>
@@ -240,9 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
     dossierBackdrop.addEventListener('click', closeDossier);
 
     dossierInquireBtn.addEventListener('click', () => {
-        if (activeDestination) {
-            destinationSelect.value = activeDestination;
-        }
+        if (activeDestination) destinationSelect.value = activeDestination;
         closeDossier();
         document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
         setTimeout(() => document.getElementById('name').focus(), 500);
@@ -255,9 +342,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    /* =========================================
-       7. Contact Form Handling & Back to Top
-       ========================================= */
     const contactForm = document.getElementById('contactForm');
     const formStatus = document.getElementById('formStatus');
     const submitBtn = document.getElementById('submitBtn');
@@ -288,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
             formStatus.classList.add('is-success');
             formStatus.textContent = `Received, ${name}. Our desk will respond within 24 hours.`;
             contactForm.reset();
-            btnSpan.textContent = 'Send Inquiry';
+            btnSpan.textContent = 'Dispatch Inquiry';
             submitBtn.disabled = false;
         }, 700);
     });

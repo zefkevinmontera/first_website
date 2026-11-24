@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>World Explorer — Architectural Wonders</title>
+
+    <!-- Custom Favicon (Save your globe image as favicon.png in the same folder) -->
+    <link rel="icon" type="image/png" href="favicon.png?v=2">
+<link rel="shortcut icon" type="image/png" href="favicon.png?v=2">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -15,18 +20,19 @@
     <header class="navbar" id="navbar">
         <div class="nav-inner">
             <a href="#home" class="logo">
+                <img src="favicon.png" alt="World Explorer Globe Emblem" class="logo-emblem" onerror="this.style.display='none'">
                 <span class="logo-text">WORLD EXPLORER</span>
                 <span class="logo-meta">ARCHIVE / 2026</span>
             </a>
 
             <nav class="nav-links" aria-label="Primary Navigation">
-                <a href="#wonders" class="nav-link">Wonders</a>
-                <a href="#about" class="nav-link">Philosophy</a>
-                <a href="#contact" class="nav-link">Inquire</a>
+                <a href="#wonders" class="nav-link" data-scramble="Wonders">Wonders</a>
+                <a href="#about" class="nav-link" data-scramble="Philosophy">Philosophy</a>
+                <a href="#contact" class="nav-link" data-scramble="Inquire">Inquire</a>
             </nav>
 
             <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
-                <span class="menu-btn-text">MENU</span>
+                <span class="menu-btn-text">INDEX</span>
                 <span class="menu-lines">
                     <span></span>
                     <span></span>
@@ -39,7 +45,7 @@
     <!-- Mobile Navigation Drawer -->
     <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
         <div class="mobile-drawer-inner">
-            <span class="mono-label">NAVIGATION</span>
+            <span class="mono-label">DIRECTORY</span>
             <ul class="mobile-nav-list">
                 <li><a href="#home" class="mobile-link">01 — Home</a></li>
                 <li><a href="#wonders" class="mobile-link">02 — Wonders</a></li>
@@ -57,30 +63,44 @@
         <section id="home" class="hero">
             <div class="container hero-grid">
                 <div class="hero-copy">
-                    <p class="mono-label reveal-up" style="--delay: 0.05s">FIELD ARCHIVE — VOLUME IV</p>
+                    <div class="hero-kicker">
+                        <span class="mono-label">ARCHITECTURAL ATLAS</span>
+                    </div>
+
                     <h1 class="hero-title">
-                        <span class="line-mask"><span class="line-reveal" style="--delay: 0.1s">Discover</span></span>
-                        <span class="line-mask"><span class="line-reveal" style="--delay: 0.2s"><em>Timeless</em> Places.</span></span>
+                        <span class="line-mask"><span class="line-reveal" style="--delay: 0.08s">Discover</span></span>
+                        <span class="line-mask"><span class="line-reveal" style="--delay: 0.18s"><em>Timeless</em> Places.</span></span>
                     </h1>
-                    <p class="hero-lead reveal-up" style="--delay: 0.35s">
-                        Embark on a considered journey across the world's most enduring monuments—crafted for travelers who value history, architecture, and unhurried time.
+
+                    <div class="draft-rule" data-draft></div>
+
+                    <p class="hero-lead reveal-up" style="--delay: 0.32s">
+                        Embark on a considered journey across the world's most enduring monuments—crafted for travelers who value stone, history, and unhurried time.
                     </p>
-                    <div class="hero-actions reveal-up" style="--delay: 0.45s">
-                        <a href="#wonders" class="btn btn-solid">
-                            <span>Explore the Archive</span>
+
+                    <div class="hero-actions reveal-up" style="--delay: 0.42s">
+                        <a href="#wonders" class="btn btn-stamp">
+                            <span>See the Great Wonders</span>
                             <span class="btn-arrow">→</span>
                         </a>
-                        <a href="#contact" class="btn btn-text">Plan a Custom Route</a>
+                        <a href="#contact" class="btn btn-text">Commission a Route</a>
                     </div>
                 </div>
 
+                <!-- Interactive Cartographic Loupe Frame -->
                 <div class="hero-media">
-                    <div class="image-curtain" data-reveal>
-                        <img src="https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700453824.jpg" alt="World Explorer landscape view">
+                    <div class="loupe-frame" id="loupeFrame" data-draft>
+                        <img src="https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700453824.jpg" alt="World Explorer landscape view" id="loupeBaseImg">
+                        <!-- Magnifying Glass Overlay -->
+                        <div class="loupe-lens" id="loupeLens" aria-hidden="true">
+                            <span class="loupe-coords" id="loupeCoords">00.00° N / 00.00° E</span>
+                        </div>
+                        <div class="loupe-hint mono-label">HOVER TO INSPECT</div>
                     </div>
-                    <div class="media-caption reveal-up" style="--delay: 0.5s">
+
+                    <div class="media-caption">
                         <span class="mono-label">FIG. 00 — GLOBAL EXPEDITIONS</span>
-                        <span class="mono-label">6 FEATURED SITES / 4 REGIONS</span>
+                        <span class="mono-label">6 MONUMENTS / 4 REGIONS</span>
                     </div>
                 </div>
             </div>
@@ -90,48 +110,48 @@
         <div class="ticker" aria-hidden="true">
             <div class="ticker-track">
                 <span>40.4319° N, 116.5704° E — GREAT WALL OF CHINA</span>
-                <span class="ticker-sep">/</span>
+                <span class="ticker-sep">◆</span>
                 <span>30.3285° N, 35.4444° E — PETRA, JORDAN</span>
-                <span class="ticker-sep">/</span>
+                <span class="ticker-sep">◆</span>
                 <span>13.1631° S, 72.5450° W — MACHU PICCHU, PERU</span>
-                <span class="ticker-sep">/</span>
+                <span class="ticker-sep">◆</span>
                 <span>41.8902° N, 12.4922° E — COLOSSEUM, ITALY</span>
-                <span class="ticker-sep">/</span>
+                <span class="ticker-sep">◆</span>
                 <span>27.1751° N, 78.0421° E — TAJ MAHAL, INDIA</span>
-                <span class="ticker-sep">/</span>
+                <span class="ticker-sep">◆</span>
                 <span>20.6843° N, 88.5678° W — CHICHÉN ITZÁ, MEXICO</span>
-                <span class="ticker-sep">/</span>
+                <span class="ticker-sep">◆</span>
                 <!-- Duplicate for seamless loop -->
                 <span>40.4319° N, 116.5704° E — GREAT WALL OF CHINA</span>
-                <span class="ticker-sep">/</span>
+                <span class="ticker-sep">◆</span>
                 <span>30.3285° N, 35.4444° E — PETRA, JORDAN</span>
-                <span class="ticker-sep">/</span>
+                <span class="ticker-sep">◆</span>
                 <span>13.1631° S, 72.5450° W — MACHU PICCHU, PERU</span>
-                <span class="ticker-sep">/</span>
+                <span class="ticker-sep">◆</span>
                 <span>41.8902° N, 12.4922° E — COLOSSEUM, ITALY</span>
-                <span class="ticker-sep">/</span>
+                <span class="ticker-sep">◆</span>
                 <span>27.1751° N, 78.0421° E — TAJ MAHAL, INDIA</span>
-                <span class="ticker-sep">/</span>
+                <span class="ticker-sep">◆</span>
                 <span>20.6843° N, 88.5678° W — CHICHÉN ITZÁ, MEXICO</span>
-                <span class="ticker-sep">/</span>
+                <span class="ticker-sep">◆</span>
             </div>
         </div>
 
         <!-- Wonders Section -->
         <section id="wonders" class="wonders-section">
             <div class="container">
-                <div class="section-head" data-reveal>
+                <div class="section-head" data-draft>
                     <div>
                         <span class="mono-label">SELECTED MONUMENTS</span>
                         <h2>Wonders of the World</h2>
                     </div>
                     <p class="section-intro">
-                        Filter by region to explore six monumental landscapes shaped by human ingenuity. Select any site to inspect its architectural dossier.
+                        Filter by region to explore six monumental landscapes shaped by human ingenuity. Select any plate to inspect its architectural dossier.
                     </p>
                 </div>
 
                 <!-- Interactive Region Filter Bar -->
-                <div class="filter-bar" role="tablist" aria-label="Filter wonders by region" data-reveal>
+                <div class="filter-bar" role="tablist" aria-label="Filter wonders by region">
                     <div class="filter-buttons">
                         <button class="filter-btn is-active" data-filter="all" role="tab" aria-selected="true">
                             All Sites <span class="filter-count">06</span>
@@ -154,114 +174,126 @@
 
                 <div class="wonders-grid" id="wondersGrid">
                     <!-- 01 China -->
-                    <article class="wonder-card" data-region="asia" data-reveal style="--delay: 0.05s">
+                    <article class="wonder-card" data-region="asia" data-material="stone" data-draft>
                         <div class="card-meta">
                             <span class="mono-label">01 / CHINA — ASIA</span>
                             <span class="mono-label">40.43° N</span>
                         </div>
                         <div class="card-image-box">
                             <img src="https://tse4.mm.bing.net/th/id/OIP.BABrW8V4mnGcKp_Uwl4xJwHaEK?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Great Wall of China">
+                            <div class="reticle" aria-hidden="true"></div>
                         </div>
                         <div class="card-content">
+                            <span class="material-tag">GREY GRANITE & RAMMED EARTH</span>
                             <h3>Great Wall of China</h3>
                             <p>A series of stone and earthen fortifications stretching over 13,000 miles across northern mountain ridges, built across dynasties to safeguard ancient states.</p>
                             <button class="card-trigger" data-wonder="china">
-                                <span>Read Dossier</span>
+                                <span>Open Dossier</span>
                                 <span class="trigger-arrow">↗</span>
                             </button>
                         </div>
                     </article>
 
                     <!-- 02 Jordan -->
-                    <article class="wonder-card" data-region="middle-east" data-reveal style="--delay: 0.12s">
+                    <article class="wonder-card" data-region="middle-east" data-material="sandstone" data-draft>
                         <div class="card-meta">
                             <span class="mono-label">02 / JORDAN — MIDDLE EAST</span>
                             <span class="mono-label">30.32° N</span>
                         </div>
                         <div class="card-image-box">
                             <img src="https://th.bing.com/th/id/OIP.BCMJrYTkNTw9xH16D6homwHaEK?o=7&cb=ucfimg2rm=3&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Petra, Jordan">
+                            <div class="reticle" aria-hidden="true"></div>
                         </div>
                         <div class="card-content">
+                            <span class="material-tag">ROSE-RED SANDSTONE</span>
                             <h3>Petra</h3>
                             <p>An ancient trading capital carved directly into the rose-red sandstone cliffs of southern Jordan, celebrated for its rock-cut facades and hydraulic engineering.</p>
                             <button class="card-trigger" data-wonder="jordan">
-                                <span>Read Dossier</span>
+                                <span>Open Dossier</span>
                                 <span class="trigger-arrow">↗</span>
                             </button>
                         </div>
                     </article>
 
                     <!-- 03 Peru -->
-                    <article class="wonder-card" data-region="americas" data-reveal style="--delay: 0.19s">
+                    <article class="wonder-card" data-region="americas" data-material="moss" data-draft>
                         <div class="card-meta">
                             <span class="mono-label">03 / PERU — AMERICAS</span>
                             <span class="mono-label">13.16° S</span>
                         </div>
                         <div class="card-image-box">
                             <img src="https://cdn.pixabay.com/photo/2021/05/05/00/43/machu-pichu-6229909_1280.jpg" alt="Machu Picchu, Peru">
+                            <div class="reticle" aria-hidden="true"></div>
                         </div>
                         <div class="card-content">
+                            <span class="material-tag">ANDEAN ASHLAR GRANITE</span>
                             <h3>Machu Picchu</h3>
                             <p>A 15th-century Inca citadel perched high above the Urubamba River valley, renowned for its mortarless dry-stone masonry and astronomical alignments.</p>
                             <button class="card-trigger" data-wonder="peru">
-                                <span>Read Dossier</span>
+                                <span>Open Dossier</span>
                                 <span class="trigger-arrow">↗</span>
                             </button>
                         </div>
                     </article>
 
                     <!-- 04 Italy -->
-                    <article class="wonder-card" data-region="europe" data-reveal style="--delay: 0.05s">
+                    <article class="wonder-card" data-region="europe" data-material="travertine" data-draft>
                         <div class="card-meta">
                             <span class="mono-label">04 / ITALY — EUROPE</span>
                             <span class="mono-label">41.89° N</span>
                         </div>
                         <div class="card-image-box">
                             <img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1000&q=80" alt="The Colosseum in Rome, Italy">
+                            <div class="reticle" aria-hidden="true"></div>
                         </div>
                         <div class="card-content">
+                            <span class="material-tag">ROMAN TRAVERTINE & TUFF</span>
                             <h3>The Colosseum</h3>
                             <p>Rome's monumental Flavian Amphitheatre, engineered in travertine limestone and volcanic tuff with tiered barrel vaults and a subterranean hypogeum.</p>
                             <button class="card-trigger" data-wonder="italy">
-                                <span>Read Dossier</span>
+                                <span>Open Dossier</span>
                                 <span class="trigger-arrow">↗</span>
                             </button>
                         </div>
                     </article>
 
                     <!-- 05 India -->
-                    <article class="wonder-card" data-region="asia" data-reveal style="--delay: 0.12s">
+                    <article class="wonder-card" data-region="asia" data-material="lapis" data-draft>
                         <div class="card-meta">
                             <span class="mono-label">05 / INDIA — ASIA</span>
                             <span class="mono-label">27.17° N</span>
                         </div>
                         <div class="card-image-box">
                             <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1000&q=80" alt="Taj Mahal in Agra, India">
+                            <div class="reticle" aria-hidden="true"></div>
                         </div>
                         <div class="card-content">
+                            <span class="material-tag">MAKRANA MARBLE & LAPIS</span>
                             <h3>Taj Mahal</h3>
                             <p>A symmetrical ivory-white marble mausoleum on the Yamuna River bank, uniting Persian, Islamic, and Indian architectural traditions with pietra dura inlay.</p>
                             <button class="card-trigger" data-wonder="india">
-                                <span>Read Dossier</span>
+                                <span>Open Dossier</span>
                                 <span class="trigger-arrow">↗</span>
                             </button>
                         </div>
                     </article>
 
                     <!-- 06 Mexico -->
-                    <article class="wonder-card" data-region="americas" data-reveal style="--delay: 0.19s">
+                    <article class="wonder-card" data-region="americas" data-material="ochre" data-draft>
                         <div class="card-meta">
                             <span class="mono-label">06 / MEXICO — AMERICAS</span>
                             <span class="mono-label">20.68° N</span>
                         </div>
                         <div class="card-image-box">
                             <img src="https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&w=1000&q=80" alt="Chichén Itzá in Yucatán, Mexico">
+                            <div class="reticle" aria-hidden="true"></div>
                         </div>
                         <div class="card-content">
+                            <span class="material-tag">YUCATÁN LIMESTONE</span>
                             <h3>Chichén Itzá</h3>
                             <p>A major Maya ceremonial city in the Yucatán Peninsula anchored by El Castillo, a stepped pyramid calibrated to the solar equinoxes.</p>
                             <button class="card-trigger" data-wonder="mexico">
-                                <span>Read Dossier</span>
+                                <span>Open Dossier</span>
                                 <span class="trigger-arrow">↗</span>
                             </button>
                         </div>
@@ -270,31 +302,42 @@
             </div>
         </section>
 
-        <!-- Philosophy / About Section -->
+        <!-- Philosophy Section (Solid Obsidian & Material Legend) -->
         <section id="about" class="philosophy-section">
             <div class="container philosophy-grid">
-                <div class="philosophy-left" data-reveal>
+                <div class="philosophy-left" data-draft>
                     <span class="mono-label">OUR APPROACH</span>
                     <h2>Travel approached as an <em>architectural</em> study.</h2>
                     <p>We strip away crowded tour buses and rigid checklists, replacing them with quiet early-morning access and genuine local scholarship.</p>
+
+                    <!-- Material Palette Legend -->
+                    <div class="palette-legend">
+                        <span class="mono-label">ATLAS MATERIAL KEY</span>
+                        <div class="swatch-row">
+                            <span class="swatch-pill"><i class="swatch-lapis"></i> Lapis Ocean</span>
+                            <span class="swatch-pill"><i class="swatch-sandstone"></i> Petra Sandstone</span>
+                            <span class="swatch-pill"><i class="swatch-moss"></i> Andean Moss</span>
+                            <span class="swatch-pill"><i class="swatch-ochre"></i> Maya Ochre</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="philosophy-list">
-                    <div class="philosophy-item" data-reveal style="--delay: 0.1s">
+                    <div class="philosophy-item" data-draft>
                         <span class="mono-label">01</span>
                         <div>
                             <h3>Resident Historians</h3>
                             <p>Walk each site alongside archaeologists and local scholars who contextualize every carving, route, and dynasty.</p>
                         </div>
                     </div>
-                    <div class="philosophy-item" data-reveal style="--delay: 0.2s">
+                    <div class="philosophy-item" data-draft>
                         <span class="mono-label">02</span>
                         <div>
                             <h3>Unhurried Pacing</h3>
                             <p>Itineraries built with breathing room—arriving at sunrise before the crowds and lingering well past golden hour.</p>
                         </div>
                     </div>
-                    <div class="philosophy-item" data-reveal style="--delay: 0.3s">
+                    <div class="philosophy-item" data-draft>
                         <span class="mono-label">03</span>
                         <div>
                             <h3>End-to-End Logistics</h3>
@@ -308,7 +351,7 @@
         <!-- Plan Your Journey / Contact Section -->
         <section id="contact" class="contact-section">
             <div class="container contact-grid">
-                <div class="contact-info" data-reveal>
+                <div class="contact-info" data-draft>
                     <span class="mono-label">INQUIRIES & BOOKING</span>
                     <h2>Plan Your Journey</h2>
                     <p>Tell us which sites draw you in and when you hope to travel. A route specialist will reply within 24 hours with a tailored outline.</p>
@@ -325,7 +368,7 @@
                     </div>
                 </div>
 
-                <div class="contact-form-wrap" data-reveal style="--delay: 0.15s">
+                <div class="contact-form-wrap" data-draft>
                     <form class="contact-form" id="contactForm" novalidate>
                         <div class="field">
                             <label for="name" class="mono-label">01 / YOUR NAME</label>
@@ -355,8 +398,8 @@
                             <textarea id="message" name="message" rows="4" placeholder="Preferred season, group size, or specific interests..." required></textarea>
                         </div>
 
-                        <button type="submit" class="btn btn-solid btn-full" id="submitBtn">
-                            <span>Send Inquiry</span>
+                        <button type="submit" class="btn btn-stamp btn-full" id="submitBtn">
+                            <span>Dispatch Inquiry</span>
                             <span class="btn-arrow">→</span>
                         </button>
 
@@ -371,7 +414,10 @@
     <footer class="footer">
         <div class="container footer-inner">
             <div class="footer-col">
-                <span class="logo-text">WORLD EXPLORER</span>
+                <div class="footer-brand-row">
+                    <img src="favicon.png" alt="" class="logo-emblem" onerror="this.style.display='none'">
+                    <span class="logo-text">WORLD EXPLORER</span>
+                </div>
                 <p>Independent field itineraries to the world's enduring architectural wonders.</p>
             </div>
             <div class="footer-nav">
@@ -386,7 +432,7 @@
         </div>
         <div class="container footer-bottom">
             <span class="mono-label">© 2026 WORLD EXPLORER</span>
-            <span class="mono-label">ALL RIGHTS RESERVED</span>
+            <span class="mono-label">CARTOGRAPHIC EDITION</span>
         </div>
     </footer>
 
@@ -407,7 +453,7 @@
 
             <div class="dossier-specs" id="dossierSpecs"></div>
 
-            <button class="btn btn-solid btn-full" id="dossierInquireBtn">
+            <button class="btn btn-stamp btn-full" id="dossierInquireBtn">
                 <span>Plan a Trip to This Site</span>
                 <span class="btn-arrow">→</span>
             </button>
